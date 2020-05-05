@@ -1,3 +1,15 @@
+"""
+Author: Sedrick Thomas
+Created: May 5, 2020
+I developed an algortihm to extract all S&P 500 Company Symbols
+using list indexing and web scraping
+It returns the list of all the stock symbols
+All you have to do is import this function and create an instance of it
+Ex. from listofstocks import stockslist
+    list_of_stocks = stockslist()
+"""
+
+
 import requests
 from csv import writer
 from bs4 import BeautifulSoup
