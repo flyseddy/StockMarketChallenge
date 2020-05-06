@@ -11,7 +11,6 @@ Ex. from listofstocks import stockslist
 
 
 import requests
-from csv import writer
 from bs4 import BeautifulSoup
 
 def stockslist():

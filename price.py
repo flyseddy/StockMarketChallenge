@@ -1,5 +1,4 @@
 from listofstocks import stockslist
-from csv import writer
 import requests
 
 def price():
