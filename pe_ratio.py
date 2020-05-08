@@ -1,19 +1,53 @@
-from price import price
-from eps import eps
+"""
+Author: Sedrick Thomas
+Created: May 7th 2020
+I developed a method to extract the current P/E ratio (if available) of each stock
+and return them as a list
 
-def pe_ratio():
-    list_of_stock_prices = price()
-    list_of_eps = eps()
-    list_of_ratios = []
+To use this module***
+
+from pe_ratio import p_e_ratio
+
+# Create an instance for the list
+pe_ratio_list = p_e_ratio()
+
+Now you are ready use this list
+"""
+
+
+
+import requests
+from bs4 import BeautifulSoup
+from listofstocks import stockslist
+
+# List of P/E ratios
+pe_list = []
+def p_e_ratio():
+    # Create an instance of the list
+    list_of_stocks = stockslist()
+    for symbol in list_of_stocks:
+        # For each symbol in the list of stock symbols ex. AAPL
+        list_empty = []
+        url = f'https://financialmodelingprep.com/financial-summary/{symbol}'
+        r = requests.get(url)
+        # Request url with the compnay name
+        soup = BeautifulSoup(r.text, 'html.parser')
+        containers = soup.find_all('tbody')
+        # Scrapes the <tbody> tag for the required infromation
+        primary = containers[1]
+        # Takes the second index [1] of containers
+        for item in primary:
+            # For each item in this list of items ex. P/E ratio, ROA, Debt/Equity
+            list_empty.append(item)
+            # Add each item to list
+
+        p_e = list_empty[12].get_text()
+        # Get the 13th index [12] which is P/E Ratio
+        pe_list.append(p_e)
+        # Add the P/E ratio to the list of other P/E ratios
+        list_empty.clear()
+        # Clear the list so we can do this process over again for each symbol
     
-    # Iterates through the length of this list(505 items)
-    # Calculates the estimated P/E ratio of each stock based on the quarterly eps
-    for i in range(len(list_of_stock_prices)):
-        try:
-            ratio = float(list_of_stock_prices[i]) // float(list_of_eps[i])
-        except (ZeroDivisionError, IndexError):
-            pass
-        else:
-            list_of_ratios.append(ratio)
-    
-    return list_of_ratios        
+    return pe_list
+
+

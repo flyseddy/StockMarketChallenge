@@ -1,3 +1,18 @@
+"""
+Author: Sedrick Thomas
+Created: May 7th 2020
+
+Method to extract the stock price of each stock
+
+to use this module**
+from price import price
+
+Create an instance of the list
+list_of_stocks = price()
+
+"""
+
+
 from listofstocks import stockslist
 import requests
 
